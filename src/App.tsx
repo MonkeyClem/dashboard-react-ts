@@ -1,16 +1,10 @@
+import { RouterProvider } from 'react-router-dom';
 import './App.css'
-import { PageShell } from './components/layout/PageShell'
-import DashboardPage from './pages/DashboardPage/DashboardPage'
+import { router } from './app/router';
 
-function App() {
+const App = () => {
+  return <RouterProvider router={router} />;
+};
 
-  return (
-    <>
-      <PageShell title='Dashboard'>
-        <DashboardPage/>
-      </PageShell>
-    </>
-  )
-}
 
 export default App
