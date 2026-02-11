@@ -1,0 +1,19 @@
+ul{
+    background-color: black;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+li{
+    list-style: none;
+}
+
+.link{
+    color: white;
+}
+
+.link:hover{
+    color: white;
+    font-weight: bolder;
+    border-bottom: 2px solid white;
+}

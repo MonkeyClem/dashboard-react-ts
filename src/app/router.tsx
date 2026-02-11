@@ -7,10 +7,11 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element : <RootLayout/>,
+        handle: { title: "Accueil" },
         children: [
             {index: true, element: <Navigate to="dashboard" replace/>}, 
-            {path : "dashboard", element: <DashboardPage/>},
-            {path :"settings", element : <SettingsPage/>}
+            {path : "dashboard", element: <DashboardPage/>, handle: { title: "Dashboard" }},
+            {path :"settings", element : <SettingsPage/>, handle: { title: "Settings" }}
         ] 
     }
 ])
