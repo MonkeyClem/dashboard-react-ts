@@ -3,6 +3,12 @@ import KpiCard from "../../components/dashboard/KpiCard";
 import styles from "./DashboardPage.module.css";
 import FiltersBar from "../../components/dashboard/FiltersBar";
 import type { PeriodDays, Category } from "../../types/filters";
+import { ChartsSection } from "../../components/dashboard/ChartsSection";
+import {
+  createMockTrendData,
+} from "../../types/analytics";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBarChart, faUser } from "@fortawesome/free-regular-svg-icons";
 
 export type kpiMockType = {
   id: number;
@@ -40,7 +46,6 @@ const mockedData: kpiMockType[] = [
   { id: 6, label: "Erreurs non critiques", value: 2, hint: "1 vs hier" },
 ];
 
-
 export default function DashboardPage() {
   const [period, setPeriod] = useState<PeriodDays>(30);
   const [category, setCategory] = useState<Category>("C");
@@ -51,6 +56,9 @@ export default function DashboardPage() {
   const handleCategoryChange = (category: Category): void => {
     setCategory(category);
   };
+
+
+  const mockedActiveUsersTrendData = createMockTrendData(period, category);
 
   return (
     <>
@@ -72,6 +80,29 @@ export default function DashboardPage() {
           />
         ))}
       </div>
+      
+    <h3>Graphiques</h3>
+    <div className={styles.dashboardChartsContainer}         > 
+        <div className={styles.dashboardChartCard}>
+          <div className={styles.dashboardChartCardHeader}>
+                <FontAwesomeIcon icon={faUser}/>
+                <h3>Utilisateurs Actifs</h3>  
+          </div>
+                <ChartsSection
+                activeUsersTrendData={mockedActiveUsersTrendData}
+                />
+        </div>
+        {/* <div className={styles.dashboardChartCard}>
+        <div className={styles.dashboardChartCardHeader}>
+                <FontAwesomeIcon icon={faBarChart}/>
+                <h3>Taux de complétion</h3>  
+          </div>
+            <ChartsSection
+                activeUsersTrendData={mockedActiveUsersTrendData}
+                // breakdownData={mockedTrendData}
+            />
+       </div> */}
+    </div>
     </>
   );
 }

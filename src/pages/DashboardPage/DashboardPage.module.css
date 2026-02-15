@@ -4,3 +4,26 @@
    justify-content: flex-start;
    gap: 10px;
 }
+
+.dashboardChartsContainer{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 16px; 
+}
+
+.dashboardChartCard{
+    background-color: rgb(22, 22, 22);
+    padding: 12px;
+    border: 2px solid grey;
+    border-radius : 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dashboardChartCardHeader{
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}

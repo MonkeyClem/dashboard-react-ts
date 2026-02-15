@@ -7,7 +7,7 @@ interface FiltersBarProps {
   onCategoryChange: (next: Category) => void;
 }
 
-const PERIOD_OPTIONS: readonly PeriodDays[] = [7, 30, 90];
+const PERIOD_OPTIONS: readonly PeriodDays[] = [7, 14, 21, 30];
 const CATEGORY_OPTIONS: readonly Category[] = ["all", "A", "B", "C"];
 
 export default function FiltersBar({
