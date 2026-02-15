@@ -1,18 +1,18 @@
 import { LineChart, CartesianGrid, XAxis, YAxis, Line } from "recharts";
-import type { ActiveUsersTrendPoint } from "../../types/analytics";
+import type { ActiveUsersTrendPoint } from "../../../types/analytics";
 
-interface ChartsSectionProps {
+interface ActiveUsersLineChartProps {
   activeUsersTrendData: ActiveUsersTrendPoint[];
 }
 
 const Y_AXIS_MAX = 1400;
 
-export function ChartsSection({ activeUsersTrendData }: ChartsSectionProps) {
-  return (
+export function ActiveUsersLineChart({ activeUsersTrendData }: ActiveUsersLineChartProps) {
+  return (  
     <LineChart
       responsive
       style={{
-        height: "85%",
+        height: "90%",
         minHeight: 150,
         width: "85%",
         aspectRatio: 1.6,
@@ -22,7 +22,7 @@ export function ChartsSection({ activeUsersTrendData }: ChartsSectionProps) {
     >
       <CartesianGrid />
       <XAxis 
-             dataKey={"dayIndex"}  
+            dataKey={"dayIndex"}  
             fontSize={8}  
             angle={-45} 
             interval={0}

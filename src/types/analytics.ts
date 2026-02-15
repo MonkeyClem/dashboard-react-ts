@@ -4,8 +4,21 @@ export interface ActiveUsersTrendPoint {
     dayIndex: string
     activeUsers: number,
     }
+
+export interface ActiveUsersBreakdown {
+    category : "A"|"B"|"C",
+    activeUsers : number
+}
+
+export interface CompletionRatePoint  {
+    dayIndex : string, 
+    A : number,
+    B : number,
+    C: number
+}
     
-    
+
+// LINE CHART MOCK DATA FUNCTIONS
 export const createFakeUsersAmount = (category : Category) : number => {
         switch (category) {
             case "A":
@@ -41,3 +54,23 @@ export const createMockTrendData = (period : PeriodDays, category : Category) : 
 
             return mockedTrendData
         }
+
+
+// Bar chart mock data functions : 
+
+export const randomBetween = (min : number, max: number) : number => {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
+
+export const createMockCompletionRateData = (period : PeriodDays) : CompletionRatePoint[] => {
+    let dayCount = period
+    const mockedCompletionRateData : CompletionRatePoint[] = []
+    for(let i = period; i >= 1; i--){
+        const dayIndex = createFakeActiveUsersActivity(dayCount)
+        const newObject : CompletionRatePoint = {dayIndex : dayIndex.toLocaleDateString(), A: randomBetween(75, 90) , B: randomBetween(60, 75), C: randomBetween(45, 60)}
+        mockedCompletionRateData.push(newObject)
+        dayCount -= 1  
+    }
+    return mockedCompletionRateData
+}
