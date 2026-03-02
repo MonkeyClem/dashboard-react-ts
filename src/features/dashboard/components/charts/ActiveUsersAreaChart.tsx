@@ -7,6 +7,7 @@ interface ActiveUsersAreaChartProps {
   activeUsersTrendData: ActiveUsersTrendPoint[];
   tickInterval: number
   category : Category
+  
 }
 
 export function ActiveUsersAreaChart({ activeUsersTrendData, tickInterval, category }: ActiveUsersAreaChartProps) {
