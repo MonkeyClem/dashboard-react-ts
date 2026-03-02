@@ -1,5 +1,6 @@
-import type { PeriodDays, Category } from "../../types/filters";
+import type { PeriodDays, Category } from '../../../../shared/types/filters';
 import styles from './FiltersBar.module.css'
+
 interface FiltersBarProps {
   period: PeriodDays;
   category: Category;
@@ -7,8 +8,8 @@ interface FiltersBarProps {
   onCategoryChange: (next: Category) => void;
 }
 
-const PERIOD_OPTIONS: readonly PeriodDays[] = [7, 14, 21, 30];
-const CATEGORY_OPTIONS: readonly Category[] = ["all", "A", "B", "C"];
+const PERIOD_OPTIONS: readonly PeriodDays[] = [7, 30, 90];
+const CATEGORY_OPTIONS: readonly Category[] = ["all", "powerUsers", "regularUsers", "lightUsers"];
 
 export default function FiltersBar({
   period,

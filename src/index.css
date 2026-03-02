@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #0f1117;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -28,11 +28,22 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  font-family: 'Inter', sans-serif;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.title {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.02rem;
+  border-left: 3px solid #3B82F6;
+  padding-left: 0.6rem;
+}
+
+h1{
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02rem;
 }
 
 button {

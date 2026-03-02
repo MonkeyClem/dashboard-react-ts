@@ -1,17 +1,13 @@
-import { useState } from "react";
-import KpiCard from "../../components/dashboard/KpiCard";
+import { useMemo, useState } from "react";
+import KpiCard from "../../features/dashboard/components/KpiCard/KpiCard";
 import styles from "./DashboardPage.module.css";
-import FiltersBar from "../../components/dashboard/FiltersBar";
-import type { PeriodDays, Category } from "../../types/filters";
-import { ActiveUsersLineChart } from "../../components/dashboard/Charts/ActiveUsersLineChart";
-import {
-  createMockCompletionRateData,
-  createMockTrendData,
-} from "../../types/analytics";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-import DashboardChartCard from '../../components/dashboard/Charts/DashboardChartCard/DashboardChartCard';
-import { faAngrycreative } from "@fortawesome/free-brands-svg-icons/faAngrycreative";
-import CompletionRateChart from "../../components/dashboard/Charts/CompletionRateChart";
+import FiltersBar from "../../features/dashboard/components/FiltersBar/FiltersBar";
+import type { PeriodDays, Category } from "../../shared/types/filters";
+import { faBarChart, faUser } from "@fortawesome/free-regular-svg-icons";
+import DashboardChartCard from '../../features/dashboard/components/ChartCard/DashboardChartCard';
+import CompletionRateChart from "../../features/dashboard/components/charts/CompletionRateChart";
+import { createMockCompletionRateData, createMockTrendData } from "../../features/data/utils";
+import { ActiveUsersAreaChart } from "../../features/dashboard/components/charts/ActiveUsersAreaChart";
 
 export type kpiMockType = {
   id: number;
@@ -20,59 +16,55 @@ export type kpiMockType = {
   hint?: string;
 };
 
+export type tickInterval = 0 | 4 | 12
+
 const mockedData: kpiMockType[] = [
-  {
-    id: 1,
-    label: "Utilisateurs actifs",
-    value: 1246,
-    hint: "+12% par rapport à la semaine précédente",
-  },
-  {
-    id: 2,
-    label: "Taux de complétion",
-    value: "42%",
-    hint: "-12% par rapport à la semaine précédente",
-  },
-  {
-    id: 3,
-    label: "Temps moyen",
-    value: "3m 12s",
-    hint: "+18s vs période précédente",
-  },
-  {
-    id: 4,
-    label: "Sessions aujourd’hui",
-    value: 347,
-    hint: "+5% vs hier",
-  },
+  { id: 1, label: "Utilisateurs actifs", value: 1246, hint: "+12% par rapport à la semaine précédente"},
+  { id: 2, label: "Taux de complétion", value: "42%", hint: "-12% par rapport à la semaine précédente"},
+  { id: 3, label: "Temps moyen", value: "3m 12s", hint: "+18s vs période précédente"},
+  { id: 4, label: "Sessions aujourd’hui", value: 347, hint: "+5% vs hier",},
   { id: 5, label: "Erreurs critiques", value: 2, hint: "-1 vs hier" },
-  { id: 6, label: "Erreurs non critiques", value: 2, hint: "1 vs hier" },
+  { id: 6, label: "Erreurs non critiques", value: 2, hint: "+ 1 vs hier" },
 ];
 
 
+
+
 export default function DashboardPage() {
-  const [period, setPeriod] = useState<PeriodDays>(30);
-  const [category, setCategory] = useState<Category>("C");
+  const [period, setPeriod] = useState<PeriodDays>(7);
+  const [category, setCategory] = useState<Category>("all");
 
-  const handlePeriodChange = (period: PeriodDays) => {
-    setPeriod(period);
-  };
-  const handleCategoryChange = (category: Category): void => {
-    setCategory(category);
-  };
+  const tickInterval : tickInterval = useMemo(() => {
+    switch (period) {
+      case 7: 
+          return 0
+      case 30:
+          return 4
+      case 90:
+          return 12
+      default:
+        return 4 ;
+    }
+  }, [period])
 
-  const mockedActiveUsersTrendData = createMockTrendData(period, category);
+  const handlePeriodChange = (period: PeriodDays) => setPeriod(period);
 
-  const mockedCompletionRateData = createMockCompletionRateData(period);
+  const handleCategoryChange = (category: Category) => setCategory(category)
+
+
+  const mockedActiveUsersTrendData = useMemo(() => 
+    createMockTrendData(period), 
+    [period]
+  );
+
+  const mockedCompletionRateData = useMemo(() => 
+    createMockCompletionRateData(period),
+    [period]
+  );
 
   return (
     <>
-      <FiltersBar
-        period={period}
-        category={category}
-        onCategoryChange={handleCategoryChange}
-        onPeriodChange={handlePeriodChange}
-      />
+      <h2 id="dashboardKpiSection" className="title">Key Performance Indicator</h2>
       <div className={styles.dashboardKpiContainer}>
         {mockedData.map((data) => (
           <KpiCard
@@ -83,14 +75,19 @@ export default function DashboardPage() {
           />
         ))}
       </div>
-
-      <h3 id="dashboardChartSection">Graphiques</h3>
+      <h2 id="dashboardChartSection" className="title">Basic Charts</h2>
+            <FiltersBar
+              period={period}
+              category={category}
+              onCategoryChange={handleCategoryChange}
+              onPeriodChange={handlePeriodChange}
+            />
       <div className={styles.dashboardChartsContainer}>
         <DashboardChartCard title="Utilisateurs actifs" icon={faUser}>
-                    <ActiveUsersLineChart activeUsersTrendData={mockedActiveUsersTrendData} />
+          <ActiveUsersAreaChart category={category} activeUsersTrendData={mockedActiveUsersTrendData} tickInterval={tickInterval}/>
         </DashboardChartCard>
-        <DashboardChartCard title="Taux de complétion" icon={faAngrycreative}>
-          <CompletionRateChart category={category} completionRateData={mockedCompletionRateData} /> 
+        <DashboardChartCard title="Taux de complétion" icon={faBarChart}>
+          <CompletionRateChart category={category} completionRateData={mockedCompletionRateData} tickInterval={tickInterval} /> 
         </DashboardChartCard>
       </div>
     </>
