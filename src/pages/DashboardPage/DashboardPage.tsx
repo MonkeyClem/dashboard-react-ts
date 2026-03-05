@@ -9,7 +9,7 @@ import CompletionRateChart from "../../features/dashboard/components/charts/Comp
 import { createMockCompletionRateData, createMockTrendData } from "../../features/data/utils";
 import { ActiveUsersAreaChart } from "../../features/dashboard/components/charts/ActiveUsersAreaChart";
 import type { ActiveUsersTrendPoint, CompletionRatePoint } from "../../shared/types/analytics";
-import { buildActiveUsersKpi, buildAvgTimekpi, buildCompletionRateKpi } from "../../features/dashboard/components/KpiCard/KpiCardUtils";
+import { buildActiveUsersKpi, buildAvgTimekpi, buildCompletionRateKpi, buildTodaysSessionKpi } from "../../features/dashboard/components/KpiCard/KpiCardUtils";
 
 export type kpiMockType = {
   id: number;
@@ -36,12 +36,16 @@ const buildKpis = (
 
     const activeUsersKpi = buildActiveUsersKpi(activeUsersTrend, category, period)
     const completionRateKpi = buildCompletionRateKpi(completionTrend, category, period)
-    const avgTime = buildAvgTimekpi()
+    const avgTimeKpi = buildAvgTimekpi()
+    const todaysSessionsKpi = buildTodaysSessionKpi(activeUsersTrend,category,  period)
 
     return [
       activeUsersKpi,
       completionRateKpi,
-      avgTime
+      avgTimeKpi, 
+      todaysSessionsKpi,
+      { id: 5, label: "Erreurs critiques", value: 2, hint: "-1 vs hier" , provenance : "calculated"},
+      { id: 6, label: "Erreurs non critiques", value: 2, hint: "+ 1 vs hier",provenance : "calculated"  }
     ]
 } 
 

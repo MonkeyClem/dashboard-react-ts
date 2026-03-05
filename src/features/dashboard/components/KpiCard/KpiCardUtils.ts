@@ -84,3 +84,22 @@ export const buildAvgTimekpi = () : KpiCardProps => {
       provenance: "estimated"
     }
 }
+
+
+export const buildTodaysSessionKpi = (
+    activeUsersTrend : ActiveUsersTrendPoint[], 
+    category : Category, 
+    period : PeriodDays
+)  : KpiCardProps => {
+
+    const activeUsers = sumTrendByCategory(activeUsersTrend, category)
+    const todaysSession = ((activeUsers / period ) / 1.2).toFixed(0)
+
+    return {
+      id : 4, 
+      label : "Nombres de sessions aujourd'hui",
+      value : todaysSession,
+      hint : "- 1.2% par rapport à la moyenne d'utilisateurs actifs", //Hardcoded, doesn't make sense to create a more complex mock for this metric 
+      provenance: "estimated"
+    }
+}
