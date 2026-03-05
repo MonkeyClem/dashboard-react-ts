@@ -8,11 +8,25 @@
     border-left: 0.1rem solid rgba(59, 130, 246, 0.25);
 }
 
+.kpiCardLabelAndBadgeContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
 .kpiCardLabel{
     text-transform: uppercase;
     letter-spacing: 0.1rem;
     font-size: small;
 }
+
+.badge {
+    padding: 0.25rem;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: small;
+}
+.badge--calculated { background-color: #8B5CF6; }
+.badge--estimated  { background-color: #3B82F6; }
 
 .kpiCardValue {
     font-size: 1.5rem;
@@ -25,10 +39,10 @@
     gap: 5px;
 }
 
-.kpiPositiveIndicator{
+/* .kpiPositiveIndicator{
     color: green;
 }
 
 .kpiNegativeIndicator{
     color : red
-}
+} */

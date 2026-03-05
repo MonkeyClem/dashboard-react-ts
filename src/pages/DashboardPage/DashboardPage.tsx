@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import KpiCard from "../../features/dashboard/components/KpiCard/KpiCard";
+import KpiCard, { type KpiCardProps } from "../../features/dashboard/components/KpiCard/KpiCard";
 import styles from "./DashboardPage.module.css";
 import FiltersBar from "../../features/dashboard/components/FiltersBar/FiltersBar";
 import type { PeriodDays, Category } from "../../shared/types/filters";
@@ -8,6 +8,8 @@ import DashboardChartCard from '../../features/dashboard/components/ChartCard/Da
 import CompletionRateChart from "../../features/dashboard/components/charts/CompletionRateChart";
 import { createMockCompletionRateData, createMockTrendData } from "../../features/data/utils";
 import { ActiveUsersAreaChart } from "../../features/dashboard/components/charts/ActiveUsersAreaChart";
+import type { ActiveUsersTrendPoint } from "../../shared/types/analytics";
+import { buildActiveUsersKpi } from "../../features/dashboard/components/KpiCard/KpiCardUtils";
 
 export type kpiMockType = {
   id: number;
@@ -18,14 +20,31 @@ export type kpiMockType = {
 
 export type tickInterval = 0 | 4 | 12
 
-const mockedData: kpiMockType[] = [
-  { id: 1, label: "Utilisateurs actifs", value: 1246, hint: "+12% par rapport à la semaine précédente"},
-  { id: 2, label: "Taux de complétion", value: "42%", hint: "-12% par rapport à la semaine précédente"},
-  { id: 3, label: "Temps moyen", value: "3m 12s", hint: "+18s vs période précédente"},
-  { id: 4, label: "Sessions aujourd’hui", value: 347, hint: "+5% vs hier",},
-  { id: 5, label: "Erreurs critiques", value: 2, hint: "-1 vs hier" },
-  { id: 6, label: "Erreurs non critiques", value: 2, hint: "+ 1 vs hier" },
-];
+// const mockedData: kpiMockType[] = [
+//   { id: 1, label: "Utilisateurs actifs", value: 1246, hint: "+12% par rapport à la semaine précédente"},
+//   { id: 2, label: "Taux de complétion", value: "42%", hint: "-12% par rapport à la semaine précédente"},
+//   { id: 3, label: "Temps moyen", value: "3m 12s", hint: "+18s vs période précédente"},
+//   { id: 4, label: "Sessions aujourd’hui", value: 347, hint: "+5% vs hier",},
+//   { id: 5, label: "Erreurs critiques", value: 2, hint: "-1 vs hier" },
+//   { id: 6, label: "Erreurs non critiques", value: 2, hint: "+ 1 vs hier" },
+// ];
+
+
+
+
+const buildKpis = (
+    activeUsersTrend : ActiveUsersTrendPoint[], 
+    category : Category, 
+    period : PeriodDays) : KpiCardProps[] => {
+
+    const activeUsersKpi = buildActiveUsersKpi(activeUsersTrend, category, period)
+
+    return [
+      activeUsersKpi,
+      activeUsersKpi
+    ]
+} 
+
 
 
 
@@ -62,15 +81,19 @@ export default function DashboardPage() {
     [period]
   );
 
+  const kpis = buildKpis(mockedActiveUsersTrendData, category, period)
+
   return (
     <>
       <h2 id="dashboardKpiSection" className="title">Key Performance Indicator</h2>
       <div className={styles.dashboardKpiContainer}>
-        {mockedData.map((data) => (
+        {kpis.map((data) => (
           <KpiCard
+            id={data.id}
             label={data.label}
             value={data.value}
             hint={data.hint}
+            provenance={data.provenance}
             key={data.id}
           />
         ))}

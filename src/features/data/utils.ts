@@ -15,7 +15,12 @@ export const createMockTrendData = (period : PeriodDays) : ActiveUsersTrendPoint
 
             for(let i = period; i >= 1; i --){
                 const dayIndex = createFakeUsersActivity(dayCount)
-                const newObject : ActiveUsersTrendPoint = {dayIndex : dayIndex.toLocaleDateString(),  powerUsers: randomBetween(750, 1500) , regularUsers: randomBetween(400, 950), lightUsers: randomBetween(200, 750)}
+                const newObject : ActiveUsersTrendPoint = {
+                                            dayIndex : dayIndex.toLocaleDateString(),  
+                                            powerUsers: Number((randomBetween(750, 1500) / 2).toFixed(0)), 
+                                            regularUsers: Number((randomBetween(400, 950) / 2).toFixed(0)),
+                                            lightUsers: Number((randomBetween(200, 750) / 2).toFixed(0))
+                                        }
                 mockedTrendData.push(newObject)
                 dayCount -= 1
             }
@@ -37,7 +42,7 @@ export const createMockCompletionRateData = (period : PeriodDays) : CompletionRa
 
     for(let i = period; i >= 1; i--){
         const dayIndex = createFakeUsersActivity(dayCount)
-        const newObject : CompletionRatePoint = {dayIndex : dayIndex.toLocaleDateString(), powerUsers: randomBetween(75, 90) , regularUsers: randomBetween(60, 75), lightUsers: randomBetween(45, 60)}
+        const newObject : CompletionRatePoint = {dayIndex : dayIndex.toLocaleDateString(), powerUsers: randomBetween(75, 90) / 2 , regularUsers: randomBetween(60, 75), lightUsers: randomBetween(45, 60)}
         mockedCompletionRateData.push(newObject)
         dayCount -= 1  
     }
