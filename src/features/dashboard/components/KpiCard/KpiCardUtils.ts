@@ -3,7 +3,6 @@ import type { Category, PeriodDays } from "../../../../shared/types/filters";
 import type { KpiCardProps } from "./KpiCard";
 
 
-
 const sumTrendByCategory = (
     trend : ActiveUsersTrendPoint[] | CompletionRatePoint[], 
     category : Category, 
@@ -57,5 +56,31 @@ export const buildCompletionRateKpi = (
         label: "Taux de complétion", 
         value: `${avgCompletionRate(category)} %`,
         provenance: "calculated"
+    }
+}
+
+
+const formatTime = (fastest : number, slowest : number) => {
+
+    const avgMin = (((fastest + slowest) / 2 ) / 60).toFixed(0)
+    const avgSec = (((fastest + slowest) / 2 ) % 60).toFixed(0)
+
+    return `${avgMin} min ${avgSec} s`
+
+}
+
+
+export const buildAvgTimekpi = () : KpiCardProps => {
+    //Hardcoded, doesn't make sense to create a more complex mock for this metric 
+    const FASTEST_RECORDED_TIME : number =  580
+    const SLOWEST_RECORDED_TIME : number = 1090
+
+    const value = formatTime(FASTEST_RECORDED_TIME, SLOWEST_RECORDED_TIME)
+    return {
+      id : 3, 
+      label : "temps moyen par session",
+      value : value,
+      hint : "+ 12% par rapport à la semaine passée", //Hardcoded, doesn't make sense to create a more complex mock for this metric 
+      provenance: "estimated"
     }
 }

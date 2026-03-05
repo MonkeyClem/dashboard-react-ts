@@ -9,7 +9,7 @@ import CompletionRateChart from "../../features/dashboard/components/charts/Comp
 import { createMockCompletionRateData, createMockTrendData } from "../../features/data/utils";
 import { ActiveUsersAreaChart } from "../../features/dashboard/components/charts/ActiveUsersAreaChart";
 import type { ActiveUsersTrendPoint, CompletionRatePoint } from "../../shared/types/analytics";
-import { buildActiveUsersKpi, buildCompletionRateKpi } from "../../features/dashboard/components/KpiCard/KpiCardUtils";
+import { buildActiveUsersKpi, buildAvgTimekpi, buildCompletionRateKpi } from "../../features/dashboard/components/KpiCard/KpiCardUtils";
 
 export type kpiMockType = {
   id: number;
@@ -31,16 +31,17 @@ const buildKpis = (
     activeUsersTrend : ActiveUsersTrendPoint[], 
     completionTrend : CompletionRatePoint[],
     category : Category, 
-    period : PeriodDays) : KpiCardProps[] => {
+    period : PeriodDays
+  ) : KpiCardProps[] => {
 
     const activeUsersKpi = buildActiveUsersKpi(activeUsersTrend, category, period)
     const completionRateKpi = buildCompletionRateKpi(completionTrend, category, period)
+    const avgTime = buildAvgTimekpi()
 
     return [
       activeUsersKpi,
       completionRateKpi,
-       activeUsersKpi,
-      completionRateKpi
+      avgTime
     ]
 } 
 
@@ -80,7 +81,10 @@ export default function DashboardPage() {
     [period]
   );
 
-  const kpis = buildKpis(mockedActiveUsersTrendData, mockedCompletionRateData, category, period)
+  const kpis = useMemo(
+              () => buildKpis(mockedActiveUsersTrendData, mockedCompletionRateData, category, period),
+                    [mockedActiveUsersTrendData, mockedCompletionRateData, category, period]
+                  )
 
   return (
     <>
@@ -115,3 +119,4 @@ export default function DashboardPage() {
     </>
   );
 }
+
