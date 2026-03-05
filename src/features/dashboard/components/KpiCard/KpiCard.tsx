@@ -11,7 +11,7 @@ export interface KpiCardProps {
 
 export default function KpiCard({ label, value, hint, provenance }: KpiCardProps) {
 
-  const indicator = hint?.startsWith("+") ? "↑" : "↓";
+  // const indicator = hint?.startsWith("+") ? "↑" : "↓";
   const badgeLabel = provenance === "calculated" ? "calculé" : "estimé"
 
   return (

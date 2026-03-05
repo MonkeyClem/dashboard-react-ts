@@ -35,7 +35,8 @@ export default function CompletionRateChart({
           tickLine={{ stroke: '#fff'}} 
           />
       <YAxis
-        label={{
+          domain={[0, 100 ]}
+          label={{
           value: `Completion Rate ( % )`,
           position: "insideLeft",
           dy: 90,

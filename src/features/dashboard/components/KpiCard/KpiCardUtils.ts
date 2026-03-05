@@ -1,24 +1,33 @@
-import type { ActiveUsersTrendPoint } from "../../../../shared/types/analytics";
+import type { ActiveUsersTrendPoint, CompletionRatePoint } from "../../../../shared/types/analytics";
 import type { Category, PeriodDays } from "../../../../shared/types/filters";
 import type { KpiCardProps } from "./KpiCard";
+
+
+
+const sumTrendByCategory = (
+    trend : ActiveUsersTrendPoint[] | CompletionRatePoint[], 
+    category : Category, 
+) => {
+    return trend.map((element) => {
+        switch (category) {
+            case "lightUsers" : 
+            return element.lightUsers;
+            case "regularUsers":
+            return element.regularUsers
+            case "powerUsers" : 
+            return element.powerUsers; 
+            default:
+            return element.powerUsers + element.lightUsers + element.regularUsers;
+        }
+    }).reduce((prev, curr) => prev + curr , 0) 
+}
 
 export const buildActiveUsersKpi = (
     activeUsersTrend : ActiveUsersTrendPoint[], 
     category : Category, 
     period : PeriodDays) : KpiCardProps => {
-    const activeUsers = activeUsersTrend.map((data) => {
-      switch (category) {
-        case "lightUsers" : 
-          return data.lightUsers;
-        case "regularUsers":
-          return data.regularUsers
-        case "powerUsers" : 
-          return data.powerUsers; 
-        default:
-          return data.powerUsers + data.lightUsers + data.regularUsers;
-      }
-    }).reduce((prev, curr) => prev + curr , 0)
-
+        
+    const activeUsers = sumTrendByCategory(activeUsersTrend, category)
     const activeUsersMean = activeUsers / period
 
     return {
@@ -27,5 +36,26 @@ export const buildActiveUsersKpi = (
       value : activeUsers,
       hint: `${activeUsersMean.toFixed(0)} par jour en moyenne`,
       provenance: "calculated"
+    }
+}
+
+
+export const buildCompletionRateKpi = (
+    completionTrend : CompletionRatePoint[], 
+    category : Category, 
+    period : PeriodDays
+) : KpiCardProps => {
+
+    const completionRate =  sumTrendByCategory(completionTrend, category) / period
+
+    const avgCompletionRate = (category : Category) => {
+        return (category === "all" ? completionRate / 3 : completionRate).toFixed(2)
+    }
+
+    return {
+        id: 2,
+        label: "Taux de complétion", 
+        value: `${avgCompletionRate(category)} %`,
+        provenance: "calculated"
     }
 }
