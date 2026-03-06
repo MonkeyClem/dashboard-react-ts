@@ -1,4 +1,5 @@
 import { Tooltip, type TooltipContentProps, type TooltipIndex } from "recharts";
+import styles from "./CustomTooltip.module.css"
 
 type CustomTooltipChart = TooltipContentProps<number, string> & {
   complementaryDescription?: string;
@@ -13,40 +14,75 @@ const CustomTooltip = ({
   unitOfMeasurement,
 }: CustomTooltipChart) => {
   const isVisible = active && payload && payload.length;
-  
+
+  if (!isVisible) return null;
+
+  const isMulti = payload.length > 1;
+
   return (
-    <>
-      {isVisible ? (
-        <div
-          className="custom-tooltip"
-          style={{
-            visibility: isVisible ? "visible" : "hidden",
-            backgroundColor: "#1f1e1e",
-            padding: 6,
-            borderRadius: 12,
-            display: "flex",
-            flexDirection: "column",
-            width: 250,
-            fontSize: 12
-          }}
-        >
-          <p className="label">{label} : </p>
-          {payload.length > 1 ? (    
-            payload.map((p) => (
-              <>
-                <p>
-                  {p.name} : {p.value}{" "}
-                  {unitOfMeasurement ? unitOfMeasurement : ""}{" "}
-                  {complementaryDescription}{" "}
-                </p>
-              </>
-            ))
-          ) : (
-            <p>{`${payload[0].value}${unitOfMeasurement ? unitOfMeasurement : ""} ${complementaryDescription}`}</p>
+    <div 
+      className={styles.tooltipContainer} style={{borderTop: `2px solid ${payload[0].color}`}}>
+      <p className={styles.headerLabel}>
+        {label}
+      </p>
+
+      {isMulti ? (
+        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+          {payload.map((p, i) => (
+            <div
+              key={i}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                gap: 16,
+              }}
+            >
+              {/* Colored dot and name */}
+              <span style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <span
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: "50%",
+                    backgroundColor: p.color ?? "#888",
+                    flexShrink: 0,
+                    boxShadow: `0 0 6px ${p.color ?? "#888"}`,
+                  }}
+                />
+                <span style={{ color: "rgba(255,255,255,0.5)" }}>{p.name}</span>
+              </span>
+
+              {/* Valeur */}
+              <span style={{ color: "#fff", fontWeight: 600 }}>
+                {p.value}
+                {unitOfMeasurement && (
+                  <span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 400 }}>
+                    {" "}{unitOfMeasurement}
+                  </span>
+                )}
+              </span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
+          <span style={{ color: "#fff", fontSize: 20, fontWeight: 700, lineHeight: 1 }}>
+            {payload[0].value}
+          </span>
+          {unitOfMeasurement && (
+            <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 12 }}>
+              {unitOfMeasurement}
+            </span>
+          )}
+          {complementaryDescription && (
+            <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 10 }}>
+              {" "}{complementaryDescription}
+            </span>
           )}
         </div>
-      ) : null}
-    </>
+      )}
+    </div>
   );
 };
 
