@@ -21,5 +21,6 @@ Table "Top items"
 Données via mock API (front) lors de la première phase
 
 # À venir
-Mise en place d'une DB réaliste (gestion latence, erreurs)
+Mise en place d'une DB réaliste 
+Gestion latence
 Tests unitaires ciblés (si pertinent)
