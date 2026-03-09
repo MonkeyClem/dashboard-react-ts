@@ -1,5 +1,5 @@
 .kpiCard{
-    background-color: #161b27;
+    background-color: var(--bgKpiCard);
     display: flex;
     flex-direction: column;
     flex : 1 1 25rem;

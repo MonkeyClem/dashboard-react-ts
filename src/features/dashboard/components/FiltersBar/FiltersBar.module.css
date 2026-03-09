@@ -1,4 +1,4 @@
-.selectBarWrapper{
+.selectBarWrapper {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
@@ -7,7 +7,36 @@
     padding: 0.75rem;
 }
 
-.filtersTitle{
+.filtersTitle {
     font-size: larger;
     font-weight: bold;
+    color: var(--text);
+}
+
+label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--textMuted);
+}
+
+.selectBarWrapper select {
+    appearance: none;
+    padding: 0.4rem 2rem 0.4rem 0.75rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background-color: var(--bgSelect);
+    color: var(--text);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.selectBarWrapper select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accentMuted);
+}
+
+.selectBarWrapper select:hover {
+    border-color: var(--accent);
 }

@@ -12,7 +12,8 @@
 }
 
 .dashboardChartCard{
-    background-color: #161b27 ;
+    background-color: var(--bgChartCard) ;
+    color: var(--text);
     padding: 12px;
     border-radius : 8px;
     display: flex;

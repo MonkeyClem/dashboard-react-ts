@@ -3,6 +3,7 @@ import './App.css'
 import { router } from './app/router';
 
 const App = () => {
+
   return <RouterProvider router={router} />;
 };
 
