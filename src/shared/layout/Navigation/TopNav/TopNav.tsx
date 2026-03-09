@@ -1,10 +1,11 @@
 import  { NavLink } from "react-router-dom";
 import styles from "./TopNav.module.css"
 import useTheme from "../../../hooks/useTheme";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon, faSun } from "@fortawesome/free-regular-svg-icons";
 
 
 export default function TopNav() {
-
     const {theme, setTheme} = useTheme()
   return (
     <nav className={styles.topNav}>
@@ -12,12 +13,17 @@ export default function TopNav() {
       <ul className={styles.ul}>
                        
         <li> 
-            <button onClick={() => setTheme(theme === "light" ? "dark" : "light")}>
-                       {theme === "dark" ? 
-                                "Light Mode" 
-                                :  
-                                "Dark Mode"}
-            </button>
+            <FontAwesomeIcon icon={faSun}/>
+            {" "}
+                <label className={styles.switch}> 
+                    <input type="checkbox" onClick={() =>  setTheme(theme === "light" ? "dark" : "light")}>
+                    </input>
+                    <span className={styles.slider}></span>
+                </label>
+            {" "}
+            <FontAwesomeIcon icon={faMoon}/>
+
+            
         </li>
 
         <li>
