@@ -36,6 +36,8 @@
 
   --bgChartCard: #161b27;
 
+  --tooltipContainerBg :rgba(5, 5, 5, 0.748);
+  --tooltipSpanColor:  rgba(255,255,255,0.45);
   
 
   
@@ -57,6 +59,10 @@
   --bgRoot: #e8eaf2;
   --bgKpiCard: #ffffff;
   --bgChartCard : #fff;
+
+  --tooltipContainerBg :rgba(235, 233, 233, 0.748);
+  
+  --tooltipSpanColor:  rgba(41, 34, 34, 0.45);
 
 
   --textMuted: #6b7280;

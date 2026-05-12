@@ -27,7 +27,11 @@ const CustomTooltip = ({
       </p>
 
       {isMulti ? (
-        <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
+        <div style={{ 
+              display: "flex", 
+              flexDirection: "column", 
+              gap: 5, 
+              }}>
           {payload.map((p, i) => (
             <div
               key={i}
@@ -50,14 +54,21 @@ const CustomTooltip = ({
                     boxShadow: `0 0 6px ${p.color ?? "#888"}`,
                   }}
                 />
-                <span style={{ color: "rgba(255,255,255,0.5)" }}>{p.name}</span>
+                <span 
+                 className={styles.tooltipSpanColor} 
+                >
+                  {p.name}
+                </span>
               </span>
 
               {/* Valeur */}
-              <span style={{ color: "#fff", fontWeight: 600 }}>
+              <span   className={styles.tooltipSpanColor}
+              style={{ fontWeight: 600 }}>
                 {p.value}
                 {unitOfMeasurement && (
-                  <span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 400 }}>
+                  <span
+                  className={styles.tooltipSpanColor}
+                  style={{ fontWeight: 400 }}>
                     {" "}{unitOfMeasurement}
                   </span>
                 )}
@@ -67,16 +78,19 @@ const CustomTooltip = ({
         </div>
       ) : (
         <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
-          <span style={{ color: "#fff", fontSize: 20, fontWeight: 700, lineHeight: 1 }}>
+          <span   className={styles.tooltipSpanColor} style={{  fontSize: 20, fontWeight: 700, lineHeight: 1 }}>
             {payload[0].value}
           </span>
           {unitOfMeasurement && (
-            <span style={{ color: "rgba(255,255,255,0.45)", fontSize: 12 }}>
+            <span 
+             className={styles.tooltipSpanColor} 
+             style={{ fontSize: 12 }}>
               {unitOfMeasurement}
             </span>
           )}
           {complementaryDescription && (
-            <span style={{ color: "rgba(255,255,255,0.3)", fontSize: 10 }}>
+            
+            <span  className={styles.tooltipSpanColor} style={{ fontSize: 10 }}>
               {" "}{complementaryDescription}
             </span>
           )}

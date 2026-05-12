@@ -11,6 +11,20 @@ interface FiltersBarProps {
 const PERIOD_OPTIONS: readonly PeriodDays[] = [7, 30, 90];
 const CATEGORY_OPTIONS: readonly Category[] = ["all", "powerUsers", "regularUsers", "lightUsers"];
 
+const transformCategoryOption = (categoryOption : Category) : string => {
+    console.log(categoryOption)
+    console.log((categoryOption as string).split(/(?=[A-Z])/))
+
+    const strArray = (categoryOption as string).split(/(?=[A-Z])/)
+    const firstLetter = strArray[0].charAt(0).toUpperCase()
+
+    strArray[0] = strArray[0].slice(1, strArray[0].length)
+
+    const newStr = firstLetter + strArray[0] + " " + strArray[1]
+
+    return newStr
+}
+
 export default function FiltersBar({
   period,
   category,
@@ -57,7 +71,8 @@ export default function FiltersBar({
             }}
         >
             {CATEGORY_OPTIONS.map((option) => (
-            <option key={option} value={option}>{option === "all" ? "All" : option}</option>
+            <option key={option} 
+                    value={option}>{option === "all" ? "All" : transformCategoryOption(option)}</option>
             ))}
         </select>
     </div>
