@@ -21,7 +21,7 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #fff;
+    color:var(--text);
   text-decoration: none;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
 }
@@ -46,11 +46,14 @@
   text-decoration: none;
   color:var(--topNavLinkColor);
   transition: color 0.15s ease; 
+  
 }
 
 .link:hover {
   color: rgba(255, 255, 255, 0.85);
   background: rgba(255, 255, 255, 0.06);
+  font-size: small
+  
 }
 
 .link.active {
